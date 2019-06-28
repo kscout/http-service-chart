@@ -1,0 +1,14 @@
+{{ if .Values.configMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
+  labels:
+    app: {{ .Values.global.app }}
+    component: app
+    env: {{ .Values.global.env }}
+data:
+  {{- range .Values.configMap }}
+  {{ .key }}: {{ .value }}
+  {{- end }}
+{{ end }}

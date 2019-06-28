@@ -1,0 +1,63 @@
+# Global configuration shared across all charts
+#global:
+  # Deployment environment
+  #env:
+
+  # Application
+  #app:
+
+# Default value for host key.
+# Can be overridden by the host key.
+# If not host key provided:
+#
+#     - If global.env == "prod": host set to defaultHost
+#     - Else: host set to {{ .Values.global.env }}-{{ .Values.defaultHost }}
+#
+# (Required)
+#defaultHost:
+
+
+# Values for a ConfigMap resource
+# Saved under key with value in a ConfigMap
+# Passed to the app pod under the environment variable envKey
+#configMap:
+  #- key:
+  #  value:
+  #  envKey:
+
+# Values for a Secret resource
+# Saved under the key with value in a Secret
+# Passed to the app pod under the environment variable envKey
+#secret:
+  #- key:
+  #  value:
+  #  envKey:
+
+# MongoDB configuration
+#mongo:
+  # If true will provide MongoDB information from github.com/kscout/mongo-chart
+  # to the app pod via environment variables
+  #enabled:
+
+  # Environment variable to set to db password
+  # Defaults to APP_DB_PASSWORD
+  #dbPasswordEnvKey:
+
+  # Environment variable to set to db name
+  # Defaults to APP_DB_NAME
+  #dbNameEnvKey:
+
+  # Environment variable set to db host
+  # Defaults to APP_DB_HOST
+  #dbHostEnvKey:
+
+# Environment variables passed to app pod
+#env:
+  # - name:
+  #   value:
+
+# Volume mounts passed to app pod
+#volumeMounts:
+  #- name:
+  #  mountPath:
+  #  readOnly:

@@ -1,0 +1,119 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: {{ .Values.global.env }}-{{ .Values.global.app }}
+  labels:
+    app: {{ .Values.global.app }}
+    component: app
+    env: {{ .Values.global.env }}
+spec:
+  replicas: 1
+  selector:
+    app: {{ .Values.global.app }}
+    component: app
+    env: {{ .Values.global.env }}
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        containerNames:
+          - app
+        from:
+          kind: ImageStreamTag
+          name: {{ .Values.global.env }}-{{ .Values.global.app }}:{{ .Values.global.env }}-latest
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.app }}
+        component: app
+        env: {{ .Values.global.env }}
+    spec:
+      volumes:
+        - name: gh-api-configuration
+          secret:
+            secretName: {{ .Values.global.env }}-gh-api-configuration
+        - name: proxy-config
+          configMap:
+            name: {{ .Values.global.env }}-{{ .Values.global.app }}-proxy-config
+      containers:
+        - name: proxy
+          image: docker.io/kscout/caddy:v0.2.0
+          volumeMounts:
+            - name: proxy-config
+              mountPath: /mnt
+          ports:
+            - name: proxy-http
+              containerPort: 5001
+              protocol: TCP
+            - name: proxy-metrics
+              containerPort: 9180
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: proxy-http
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: proxy-http
+              scheme: HTTP
+        - name: app
+          image: docker.io/kscout/{{ .Values.global.app }}:{{ .Values.global.env }}-latest
+          {{- if or .Values.configMap .Values.secret (and .Values.mongo .Values.mongo.enabled) .Values.env }}
+          env:
+            {{- range .Values.configMap }}
+            - name: {{ .envKey }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
+                  key: {{ .key }}
+            {{- end }}
+            {{- range .Values.secret }}
+            - name: {{ .envKey }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
+                  key: {{ .key }}
+            {{- end }}
+            {{- if and .Values.mongo .Values.mongo.enabled }}
+            - name: {{ default "APP_DB_PASSWORD" .Values.mongo.dbPasswordEnvKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.env }}-{{ .Values.global.app }}-mongo-creds
+                  key: password
+            - name: {{ default "APP_DB_NAME" .Values.mongo.dbNameEnvKey }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.env }}-{{ .Values.global.app }}-mongo-config
+                  key: dbName
+            - name: {{ default "APP_DB_HOST" .Values.mongo.dbHostEnvKey }}
+              value: {{ .Values.global.env }}-{{ .Values.global.app }}-mongo
+            {{- end }}
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.volumeMounts }}
+          volumeMounts:
+          {{- range .Values.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              readOnly: {{ default false .readOnly }}
+          {{- end }}
+          {{- end }}
+          ports:
+            - name: api-http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: api-http
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: api-http
+              scheme: HTTP
