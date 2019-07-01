@@ -9,6 +9,6 @@ metadata:
     env: {{ .Values.global.env }}
 data:
   {{- range .Values.configMap }}
-  {{ .key }}: {{ .value }}
+  {{ .key }}: {{ tpl .value $ }}
   {{- end }}
 {{ end }}
