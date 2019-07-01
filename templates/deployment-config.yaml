@@ -96,8 +96,8 @@ spec:
             {{- if .envKey }}
             - name: {{ .envKey }}
               valueFrom:
-                configMapKeyRef:
-                  name: {{ $.Values.global.env }}-{{ $.Values.global.app }}-config
+                secretKeyRef:
+                  name: {{ $.Values.global.env }}-{{ $.Values.global.app }}-secret
                   key: {{ .key }}
             {{- end }}
             {{- end }}
