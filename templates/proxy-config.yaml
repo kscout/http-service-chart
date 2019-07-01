@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.global.env }}-{{ .Values.global.app }}-proxy-config
+  labels:
+    app: {{ .Values.global.app }}
+    component: proxy
+    env: {{ .Values.global.env }}
+data:
+  Caddyfile: |
+    http://*:{{ .Values.port }} {
+      prometheus :9180
+      proxy / :{{ .Values.port }}
+    }
+
+    

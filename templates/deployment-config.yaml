@@ -104,16 +104,16 @@ spec:
           {{- end }}
           {{- end }}
           ports:
-            - name: api-http
-              containerPort: 5000
+            - name: app-http
+              containerPort: {{ .Values.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health
-              port: api-http
+              port: app-http
               scheme: HTTP
           readinessProbe:
             httpGet:
               path: /health
-              port: api-http
+              port: app-http
               scheme: HTTP

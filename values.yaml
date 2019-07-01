@@ -16,6 +16,8 @@
 # (Required)
 #defaultHost:
 
+# Internal port HTTP service will listen on
+#port:
 
 # Values for a ConfigMap resource
 # Saved under key with value in a ConfigMap
