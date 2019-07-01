@@ -46,12 +46,12 @@
 # If present will mount Secret under path in app container
 #secretMount:
 
+# If true will provide MongoDB information from github.com/kscout/mongo-chart
+# to the app container via environment variables
+#mongoEnabled:
+  
 # MongoDB configuration
 #mongo:
-  # If true will provide MongoDB information from github.com/kscout/mongo-chart
-  # to the app container via environment variables
-  #enabled:
-
   # Environment variable to set to db user
   # Defaults to APP_DB_USER
   #dbUserEnvKey:
@@ -68,7 +68,7 @@
   # Defaults to APP_DB_HOST
   #dbHostEnvKey:
 
-# Environment variables passed to app pod
+# Environment variables passed to app container
 #env:
   # - name:
   #   value:
@@ -79,7 +79,7 @@
   #- name:
   #...
 
-# Volume mounts passed to app pod
+# Volume mounts passed to app container
 #volumeMounts:
   #- name:
   #  mountPath:
