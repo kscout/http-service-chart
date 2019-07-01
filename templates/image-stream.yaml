@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.global.env }}-{{ .Values.global.app }}
   labels:
     app: {{ .Values.global.app }}
-    component: image-stream
+    component: app
     env: {{ .Values.global.env }}
 spec:
   dockerImageRepository: docker.io/kscout/{{ .Values.global.app }}
