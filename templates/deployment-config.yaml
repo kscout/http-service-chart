@@ -32,6 +32,10 @@ spec:
         - name: gh-api-configuration
           secret:
             secretName: {{ .Values.global.env }}-gh-api-configuration
+        # Volumes
+        {{- range .Values.volumes }}
+        {{ . }}
+        {{- end }}
         - name: proxy-config
           configMap:
             name: {{ .Values.global.env }}-{{ .Values.global.app }}-proxy-config

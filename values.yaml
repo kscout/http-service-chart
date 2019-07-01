@@ -58,6 +58,12 @@
   # - name:
   #   value:
 
+# volumes made available to pod
+#volumes:
+  # Each object is passed directly to the deploymentconfig.spec.volumes field
+  #- name:
+  #...
+
 # Volume mounts passed to app pod
 #volumeMounts:
   #- name:
