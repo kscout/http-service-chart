@@ -22,7 +22,8 @@
 
 # Values for a ConfigMap resource
 # Saved under key with value in a ConfigMap
-# Passed to the app pod under the environment variable envKey
+# If envKey exists value passed to app container via environment
+# variable envKey.
 #configMap:
   #- key:
   #  value:
@@ -33,7 +34,8 @@
 
 # Values for a Secret resource
 # Saved under the key with value in a Secret
-# Passed to the app pod under the environment variable envKey
+# If envKey exists value passed to app container via environment
+# variable envKey.
 #secret:
   #- key:
   #  value:
