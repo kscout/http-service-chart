@@ -8,7 +8,7 @@ metadata:
     env: {{ .Values.global.env }}
 data:
   Caddyfile: |
-    http://*:{{ .Values.port }} {
+    http://*:5001 {
       prometheus :9180
       proxy / :{{ .Values.port }}
     }
