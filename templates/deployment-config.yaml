@@ -33,6 +33,22 @@ spec:
         {{- range .Values.volumes }}
         {{ . }}
         {{- end }}
+        
+        # Mount ConfigMap
+        {{- if .Values.configMapMount }}
+        - name: app-config
+          configMap:
+            name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
+        {{- end }}
+        
+        # Mount Secret
+        {{- if .Values.secretMount }}
+        - name: app-secret
+          secret:
+            secretName: {{ .Values.global.env }}-{{ .Values.global.app }}-secret
+        {{- end }}
+
+        # Mount proxy configuration
         - name: proxy-config
           configMap:
             name: {{ .Values.global.env }}-{{ .Values.global.app }}-proxy-config
@@ -67,19 +83,23 @@ spec:
           env:
             # ConfigMap keys
             {{- range .Values.configMap }}
+            {{- if .envKey }}
             - name: {{ .envKey }}
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
                   key: {{ .key }}
             {{- end }}
+            {{- end }}
             # Secret keys
             {{- range .Values.secret }}
+            {{- if .envKey }}
             - name: {{ .envKey }}
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
                   key: {{ .key }}
+            {{- end }}
             {{- end }}
             # Mongo credentials
             {{- if and .Values.mongo .Values.mongo.enabled }}
@@ -103,12 +123,25 @@ spec:
             {{- end }}
           {{- end }}
           # Volume mounts from Values
-          {{- if or .Values.volumeMounts }}
+          {{- if or .Values.volumeMounts .Values.configMapMount .Values.secretMount }}
           volumeMounts:
+          # Mount volumesMounts
           {{- range .Values.volumeMounts }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
               readOnly: {{ default false .readOnly }}
+          {{- end }}
+          # Mount ConfigMap
+          {{- if .Values.configMapMount }}
+            - name: app-config
+              mountPath: {{ .Values.configMapMount }}
+              readOnly: true
+          {{- end }}
+          # Mount Secret
+          {{- if .Values.secretMount }}
+            - name: app-secret
+              mountPath: {{ .Values.secretMount }}
+              readOnly: true
           {{- end }}
           {{- end }}
           ports:

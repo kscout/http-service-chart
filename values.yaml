@@ -17,6 +17,7 @@
 #defaultHost:
 
 # Internal port HTTP service will listen on
+# (Required)
 #port:
 
 # Values for a ConfigMap resource
@@ -27,6 +28,9 @@
   #  value:
   #  envKey:
 
+# If present will mount ConfigMap under path in app container
+#configMapMount:
+
 # Values for a Secret resource
 # Saved under the key with value in a Secret
 # Passed to the app pod under the environment variable envKey
@@ -34,6 +38,9 @@
   #- key:
   #  value:
   #  envKey:
+
+# If present will mount Secret under path in app container
+#secretMount:
 
 # MongoDB configuration
 #mongo:
