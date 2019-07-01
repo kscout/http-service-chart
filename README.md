@@ -35,7 +35,7 @@ Create a chart which deploys a specific application located in
 Helm values dictate how this chart will deploy resources.
 
 ## Global Values
-These values are shared between all charts, sub-charts and all:
+These values are shared between all charts and sub-charts:
 
 - `global.env` (String): Deployment environment
 - `global.app` (String): Name of application
