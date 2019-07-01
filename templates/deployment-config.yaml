@@ -29,9 +29,6 @@ spec:
         env: {{ .Values.global.env }}
     spec:
       volumes:
-        - name: gh-api-configuration
-          secret:
-            secretName: {{ .Values.global.env }}-gh-api-configuration
         # Volumes
         {{- range .Values.volumes }}
         {{ . }}
@@ -64,8 +61,11 @@ spec:
               scheme: HTTP
         - name: app
           image: docker.io/kscout/{{ .Values.global.app }}:{{ .Values.global.env }}-latest
+          # Environment variables
+          # Loaded from configMap, secret, and mongo Values
           {{- if or .Values.configMap .Values.secret (and .Values.mongo .Values.mongo.enabled) .Values.env }}
           env:
+            # ConfigMap keys
             {{- range .Values.configMap }}
             - name: {{ .envKey }}
               valueFrom:
@@ -73,6 +73,7 @@ spec:
                   name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
                   key: {{ .key }}
             {{- end }}
+            # Secret keys
             {{- range .Values.secret }}
             - name: {{ .envKey }}
               valueFrom:
@@ -80,6 +81,7 @@ spec:
                   name: {{ .Values.global.env }}-{{ .Values.global.app }}-config
                   key: {{ .key }}
             {{- end }}
+            # Mongo credentials
             {{- if and .Values.mongo .Values.mongo.enabled }}
             - name: {{ default "APP_DB_PASSWORD" .Values.mongo.dbPasswordEnvKey }}
               valueFrom:
@@ -94,12 +96,14 @@ spec:
             - name: {{ default "APP_DB_HOST" .Values.mongo.dbHostEnvKey }}
               value: {{ .Values.global.env }}-{{ .Values.global.app }}-mongo
             {{- end }}
+            # Plain env vars
             {{- range .Values.env }}
             - name: {{ .name }}
               value: {{ .value }}
             {{- end }}
           {{- end }}
-          {{- if .Values.volumeMounts }}
+          # Volume mounts from Values
+          {{- if or .Values.volumeMounts }}
           volumeMounts:
           {{- range .Values.volumeMounts }}
             - name: {{ .name }}
