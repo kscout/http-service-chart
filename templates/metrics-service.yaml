@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.global.env }}-serverless-registry-api-metrics
+  name: {{ .Values.global.env }}-{{ .Values.global.app }}-metrics
   labels:
-    app: serverless-registry-api
-    component: api
+    app: {{ .Values.global.app }}
+    component: app
     env: {{ .Values.global.env }}
 spec:
   type: ClusterIP
   selector:
-    app: serverless-registry-api
-    component: api
+    app: {{ .Values.global.app }}
+    component: app
     env: {{ .Values.global.env }}
   ports:
     - protocol: TCP
