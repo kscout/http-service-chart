@@ -103,6 +103,11 @@ spec:
             {{- end }}
             # Mongo credentials
             {{- if and .Values.mongo .Values.mongo.enabled }}
+            - name: {{ default "APP_DB_USER" .Values.mongo.dbUserEnvKey }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.env }}-{{ .Values.global.app }}-mongo-config
+                  key: user
             - name: {{ default "APP_DB_PASSWORD" .Values.mongo.dbPasswordEnvKey }}
               valueFrom:
                 secretKeyRef:

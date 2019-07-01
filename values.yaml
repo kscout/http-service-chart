@@ -49,8 +49,12 @@
 # MongoDB configuration
 #mongo:
   # If true will provide MongoDB information from github.com/kscout/mongo-chart
-  # to the app pod via environment variables
+  # to the app container via environment variables
   #enabled:
+
+  # Environment variable to set to db user
+  # Defaults to APP_DB_USER
+  #dbUserEnvKey:
 
   # Environment variable to set to db password
   # Defaults to APP_DB_PASSWORD
