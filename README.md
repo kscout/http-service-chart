@@ -28,6 +28,8 @@ Create a chart which deploys a specific application located in
 2. Set [global values](#global-values) in `<Chart directory>/values.yaml`
 3. Set [chart values](#chart-values) in `<Chart directory>/values.yaml`, make 
    sure to prefix them with `http.`
+4. Ensure app container 
+   meets [app container image guidelines](#app-container-image)
 
 # Values
 Helm values dictate how this chart will deploy resources.
