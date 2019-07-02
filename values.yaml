@@ -51,6 +51,7 @@
 #mongoEnabled:
   
 # MongoDB configuration
+mongo: {}
 #mongo:
   # Environment variable to set to db user
   # Defaults to APP_DB_USER
