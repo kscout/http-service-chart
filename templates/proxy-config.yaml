@@ -9,7 +9,13 @@ metadata:
 data:
   Caddyfile: |
     http://*:5001 {
+      errors /dev/stderr
+      log /dev/stdout
+      
       prometheus :9180
+
+      gzip
+      
       proxy / :{{ .Values.port }}
     }
 
