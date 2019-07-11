@@ -6,6 +6,7 @@ Helm chart which exposes an HTTP service and publishes Prometheus metrics.
 - [Use](#use)
 - [Values](#values)
 - [App Container Image](#app-container-image)
+- [Release Checklist](#release-checklist)
 
 # Overview
 Caddy reverse proxy to arbitrary HTTP service container.  
@@ -67,4 +68,14 @@ following pre-conditions:
   [`port` chart value](#chart-values)
 - Responds to an HTTP GET request at the `/health` path with status `200 OK`
 
+# Release Checklist
+When a new release occurs:
 
+1. Bump `version` in [`Chart.yaml`](Chart.yaml)
+2. [Create release](https://github.com/kscout/http-service-chart/releases/new) 
+   tagged `v<chart version>`
+3. Update submodules and open PR for the following repositories:
+   - [chat-bot-api](https://github.com/kscout/chat-bot-api)
+   - [slack-chat-bot-api](https://github.com/kscout/slack-chat-bot-api)
+   - [kscout.io](https://github.com/kscout/kscout.io)
+   - [serverless-registry-api](https://github.com/kscout/serverless-registry-api)
