@@ -27,8 +27,6 @@ spec:
         app: {{ .Values.global.app }}
         component: app
         env: {{ .Values.global.env }}
-      annotations:
-        observe.kscout.io/collect: True
     spec:
       volumes:
         # Volumes
