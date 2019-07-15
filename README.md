@@ -74,8 +74,4 @@ When a new release occurs:
 1. Bump `version` in [`Chart.yaml`](Chart.yaml)
 2. [Create release](https://github.com/kscout/http-service-chart/releases/new) 
    tagged `v<chart version>`
-3. Update submodules and open PR for the following repositories:
-   - [chat-bot-api](https://github.com/kscout/chat-bot-api)
-   - [slack-chat-bot-api](https://github.com/kscout/slack-chat-bot-api)
-   - [kscout.io](https://github.com/kscout/kscout.io)
-   - [serverless-registry-api](https://github.com/kscout/serverless-registry-api)
+3. Follow additional release instructions in [common Helm chart releases playbook](https://github.com/kscout/site-reliability/tree/master/playbooks/releases/common-helm-charts)
