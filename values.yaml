@@ -6,9 +6,7 @@
   # Application
   #app:
 
-# If false no Route resource will be created.
-#
-# This will make the http service inaccessible via external network traffic.
+# Indicates if a Route resource should be created for the app.
 routeEnabled: true
 
 # Default value for host key.
@@ -24,6 +22,14 @@ routeEnabled: true
 # Internal port HTTP service will listen on
 # (Required)
 #port:
+
+# Indicates if the app exposes a metrics server.
+# If true metricsPort must be set
+metricsEnabled: true
+
+# Internal port metrics server will be servered on
+# (Required if metricsEnabled == true)
+metricsPort: 9090
 
 # Values for a ConfigMap resource
 # Saved under key with value in a ConfigMap.

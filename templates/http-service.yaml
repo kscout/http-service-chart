@@ -15,5 +15,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: proxy-http
-      name: proxy-http
+      targetPort: http
+      name: http

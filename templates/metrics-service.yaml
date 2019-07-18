@@ -1,3 +1,4 @@
+{{- if .Values.metricsEnabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,6 +15,7 @@ spec:
     env: {{ .Values.global.env }}
   ports:
     - protocol: TCP
-      port: 9180
-      targetPort: proxy-metrics
-      name: proxy-metrics
+      port: {{ .Values.metricsPort }}
+      targetPort: metrics
+      name: metrics
+{{- end }}
