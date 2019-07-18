@@ -6,6 +6,11 @@
   # Application
   #app:
 
+# If false no Route resource will be created.
+#
+# This will make the http service inaccessible via external network traffic.
+routeEnabled: true
+
 # Default value for host key.
 # Can be overridden by the host key.
 # If not host key provided:
@@ -13,7 +18,7 @@
 #     - If global.env == "prod": host set to defaultHost
 #     - Else: host set to {{ .Values.global.env }}-{{ .Values.defaultHost }}
 #
-# (Required)
+# (Required if routeEnabled == true)
 #defaultHost:
 
 # Internal port HTTP service will listen on

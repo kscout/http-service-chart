@@ -49,6 +49,9 @@ These keys are required:
 
 - `defaultHost` (String): Full host to expose HTTP service through, prefixed
   with `global.env` if `global.env != "prod"`
+  - Note: This key is only required if you wish to expose the service to 
+	external network traffic. If you wish to keep the service private do not set
+	this key. Additionally set the `routeEnabled` key to `false`.
 - `port` (String): Port [app container image](#app-container-image) listens for
   HTTP on
   
