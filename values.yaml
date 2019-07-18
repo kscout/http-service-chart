@@ -11,6 +11,9 @@
 # This will make the http service inaccessible via external network traffic.
 routeEnabled: true
 
+# Number of app pod replicas to run
+replicas: 3
+
 # Default value for host key.
 # Can be overridden by the host key.
 # If not host key provided:
