@@ -47,34 +47,7 @@ spec:
           secret:
             secretName: {{ .Values.global.env }}-{{ .Values.global.app }}-secret
         {{- end }}
-
-        # Mount proxy configuration
-        - name: proxy-config
-          configMap:
-            name: {{ .Values.global.env }}-{{ .Values.global.app }}-proxy-config
       containers:
-        - name: proxy
-          image: docker.io/kscout/caddy:v0.2.0
-          volumeMounts:
-            - name: proxy-config
-              mountPath: /mnt
-          ports:
-            - name: proxy-http
-              containerPort: 5001
-              protocol: TCP
-            - name: proxy-metrics
-              containerPort: 9180
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: proxy-http
-              scheme: HTTP
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: proxy-http
-              scheme: HTTP
         - name: app
           image: docker.io/kscout/{{ .Values.global.app }}:{{ .Values.global.env }}-latest
           # Environment variables
@@ -150,16 +123,21 @@ spec:
           {{- end }}
           {{- end }}
           ports:
-            - name: app-http
+            - name: http
               containerPort: {{ .Values.port }}
               protocol: TCP
+            {{- if .Values.metricsEnabled }}
+            - name: metrics
+              containerPort: {{ .Values.metricsPort }}
+              protocol: TCP
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /health
-              port: app-http
+              port: http
               scheme: HTTP
           readinessProbe:
             httpGet:
               path: /health
-              port: app-http
+              port: http
               scheme: HTTP
