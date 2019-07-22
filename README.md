@@ -55,11 +55,11 @@ If this chart is being used as a sub-chart prefix these keys with `http`.
 
 These keys are required:
 
-- `defaultHost` (String): Full host to expose HTTP service through, prefixed
-  with `global.env` if `global.env != "prod"`
+- `defaultHost` (String): Full host to expose HTTP service through
+  - If `global.env != prod`: This value will be prefixed with `global.env`
   - Note: This key is only required if you wish to expose the service to 
-	external network traffic. If you wish to keep the service private do not set
-	this key. Additionally set the `routeEnabled` key to `false`.
+	external network traffic. See the [disabling external network access section](#disabling-external-network-access)
+	for more details.
 - `port` (String): Port [app container image](#app-container-image) listens for
   HTTP on
   
@@ -93,6 +93,28 @@ Array items should have the keys:
   be passed to the app container via an environment variable with `envKey` as
   its name.
 - `value` (String): Value to put in ConfigMap or Secret under `key`
+
+## Disabling External Network Access
+To make it so only people who are authorized with the Kubernetes API can access 
+your app set the `routeEnabled` key to false.
+
+This prevents a Route resource from being created, which would expose the 
+app container to anyone on the internet.
+
+To access your service run:
+
+```
+oc proxy
+```
+
+Then open the following URL in your browser:
+
+```
+http://localhost:8001/api/v1/namespaces/kscout/services/{{ .Values.global.env }}-{{ .Values.global.app }}:http/proxy
+```
+
+Replace `{{ .Values.global.env }}` and `{{ .Values.global.app }}` with the 
+values from the [values section](#values-section).
 
 # App Container Image
 This chart serves HTTP traffic to containers which meet the 
