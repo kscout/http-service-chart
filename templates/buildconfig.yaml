@@ -1,0 +1,24 @@
+kind: BuildConfig
+apiVersion: v1
+metadata:
+  name: {{ .Values.global.env }}-{{ .Values.global.app }}
+  labels:
+    app: {{ .Values.global.app }}
+    component: deploy
+    env: {{ .Values.global.env }}
+spec:
+  runPolicy: Serial
+  trigger:
+    - type: GitHub
+      github:
+        secret: {{ .Values.ghWebhookSecret }}
+  source:
+    git:
+      uri: https://github.com/kscout/{{ .Values.global.app }}.git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ .Values.global.env }}-latest
