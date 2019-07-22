@@ -21,4 +21,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ .Values.global.env }}-latest
+      name: {{ .Values.global.app }}:{{ .Values.global.env }}-latest
