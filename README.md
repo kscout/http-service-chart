@@ -14,7 +14,7 @@ meets [app container image guidelines](#app-container-image)
 on OpenShift 3+
 
 Exposes the HTTP service via a Route resource.  
-Exposes Caddy's Prometheus metrics via a Service.
+Exposes Prometheus metrics via a Service.
 
 Meant to be used as a sub-chart. See [use section](#use)
 
