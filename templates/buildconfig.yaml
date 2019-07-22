@@ -11,7 +11,8 @@ spec:
   trigger:
     - type: GitHub
       github:
-        secret: {{ .Values.ghWebhookSecret }}
+        secretReference:
+          name: {{ .Values.global.env }}-{{ .Values.global.app }}-gh-webhook-secret
   source:
     git:
       uri: https://github.com/kscout/{{ .Values.global.app }}.git
