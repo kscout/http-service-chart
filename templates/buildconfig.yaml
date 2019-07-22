@@ -8,7 +8,7 @@ metadata:
     env: {{ .Values.global.env }}
 spec:
   runPolicy: Serial
-  trigger:
+  triggers:
     - type: GitHub
       github:
         secretReference:
