@@ -74,6 +74,24 @@ spec:
                   key: {{ .key }}
             {{- end }}
             {{- end }}
+            # Secret key references
+            {{- range .Values.secretKeyRefs }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .ref.name }}
+                  key: {{ .ref.key }}
+                  optional: {{ .ref.optional | default "false" }}
+            {{- end }}
+            # Config map key references
+            {{- range .Values.configMapKeyRefs }}
+            - name: {{ .name }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .ref.name }}
+                  key: {{ .ref.key }}
+                  optional: {{ .ref.optional | default "false" }}
+            {{- end }}
             # Mongo credentials
             {{- if .Values.mongoEnabled }}
             - name: {{ default "APP_DB_USER" .Values.mongo.dbUserEnvKey }}

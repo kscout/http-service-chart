@@ -57,8 +57,7 @@ metricsPort: 9090
   #  value:
   #  envKey:
 
-# If present will mount Secret under path in app container
-#secretMount:
+# If present will 
 
 # If true will provide MongoDB information from github.com/kscout/mongo-chart
 # to the app container via environment variables
@@ -99,3 +98,15 @@ mongo: {}
   #- name:
   #  mountPath:
   #  readOnly:
+
+# Secret key reference objects to be passed to the app pod under `.spec.containers.0.env`
+# Secret key reference object spec: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#secretkeyselector-v1-core
+#secretKeyRefs:
+  #- name: <environment var key>
+  #  ref: <secret key reference object>
+
+# Config map key reference objects to be passed to the app pod under `.spec.containers.0.env`
+# Config map key reference object spec: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#configmapkeyselector-v1-core
+#configMapKeyRefs:
+  #- name: <environment var key>
+  #  ref: <config map key reference object>
