@@ -45,7 +45,9 @@ chart's `charts/` directory:
    
    **Payload URL**: Run 
    `oc describe bc {{ .Values.global.env }}-{{ .Values.global.app }}` and find 
-   the GitHub webhook URL
+   the GitHub webhook URL. Replace `<secret`> with the `ghWebhookSecret` value.
+   
+   **Content type**: application/json
    
    **Secret**: Secret value in `.ghWebhookSecret`
    
