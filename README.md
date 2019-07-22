@@ -39,19 +39,6 @@ chart's `charts/` directory:
    sure to prefix them with `http.`
 6. Ensure app container 
    meets [app container image guidelines](#app-container-image)
-7. Deploy resources
-8. Setup a GitHub webhook in you app's source repository.
-   The webhook should have the following parameters:
-   
-   **Payload URL**: Run 
-   `oc describe bc {{ .Values.global.env }}-{{ .Values.global.app }}` and find 
-   the GitHub webhook URL. Replace `<secret`> with the `ghWebhookSecret` value.
-   
-   **Content type**: application/json
-   
-   **Secret**: Secret value in `.ghWebhookSecret`
-   
-   **SSL verification**: DisableOB
 
 # Values
 Helm values dictate how this chart will deploy resources.
@@ -75,8 +62,6 @@ These keys are required:
 	for more details.
 - `port` (String): Port [app container image](#app-container-image) listens for
   HTTP on
-- `ghWebhookSecret` (String): Secret used by the BuildConfig resource and 
-  created GitHub webhook to verify requests. Never commit this value.
   
 These keys are optional but useful:
 
@@ -143,7 +128,6 @@ following pre-conditions:
 - Serves HTTP traffic on the port specified by the
   [`port` chart value](#chart-values)
 - Responds to an HTTP GET request at the `/health` path with status `200 OK`
-- Source located in the repository: `https://github.com/kscout/{{ .Values.global.app }}.git`
 
 # Release Checklist
 When a new release occurs:

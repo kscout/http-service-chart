@@ -34,11 +34,6 @@ metricsEnabled: true
 # (Required if metricsEnabled == true)
 metricsPort: 9090
 
-# The secret value used by the GitHub webhook and the BuildConfig resource to
-# verify requests
-# (Required)
-#ghWebhookSecret:
-
 # Values for a ConfigMap resource
 # Saved under key with value in a ConfigMap.
 # Value can use Go templates. Context is the chart root.
