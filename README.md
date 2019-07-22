@@ -11,7 +11,7 @@ Helm chart which exposes an HTTP service and publishes Prometheus metrics.
 # Overview
 Runs any HTTP service container which 
 meets [app container image guidelines](#app-container-image) 
-on OpenShift 3.x+.
+on OpenShift 3+
 
 Exposes the HTTP service via a Route resource.  
 Exposes Caddy's Prometheus metrics via a Service.
