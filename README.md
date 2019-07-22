@@ -9,7 +9,9 @@ Helm chart which exposes an HTTP service and publishes Prometheus metrics.
 - [Release Checklist](#release-checklist)
 
 # Overview
-Caddy reverse proxy to arbitrary HTTP service container.  
+Runs any HTTP service container which 
+meets [app container image guidelines](#app-container-image) 
+on OpenShift 3.x+.
 
 Exposes the HTTP service via a Route resource.  
 Exposes Caddy's Prometheus metrics via a Service.
@@ -55,8 +57,36 @@ These keys are required:
 - `port` (String): Port [app container image](#app-container-image) listens for
   HTTP on
   
-See the [`values.yaml` file](values.yaml) for documentation on the many other 
-optional keys.
+These keys are optional but useful:
+
+- `metricsEnabled` (Boolean): If true: An internal Service resource will be 
+  created which publishes a Prometheus metrics scrape target.
+- `metricsPort` (String): If `metricsEnabled == true`: The container port from 
+  which the metrics service will collect metrics.
+- `configMap` ([]Object): If present: A ConfigMap resource will be created who's
+  contents are items which follow the [Config Item Schema](#config-item-schema)
+- `configMapMount` (String): If present: ConfigMap resource created by the above
+  `configMap` key will be mounted in the app container as a volume under the 
+  specified path
+- `secret` ([]Object): If present: A Secret resource will be created, who's
+  contents are items which follow the [Config Item Schema](#config-item-schema)
+- `secretMount` (String): If present: Secret resource created by the above
+  `secret` key will be mounted in the app container as a volume under the
+  specified path
+  
+See the [`values.yaml` file](values.yaml) for complete documentation of 
+all keys.
+
+## Config Item Schema
+The `configMap` and `secret` value file keys both follow the same schema.
+
+Array items should have the keys:
+
+- `key` (String): Key in the ConfigMap or Secret to create
+- `envKey` (String): If present: The key created in the ConfigMap of Secret will
+  be passed to the app container via an environment variable with `envKey` as
+  its name.
+- `value` (String): Value to put in ConfigMap or Secret under `key`
 
 # App Container Image
 This chart serves HTTP traffic to containers which meet the 
