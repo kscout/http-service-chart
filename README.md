@@ -19,19 +19,25 @@ Exposes Prometheus metrics via a Service.
 Meant to be used as a sub-chart. See [use section](#use)
 
 # Use
-This repository does not deploy a resource on its own.  
-Meant to be used as a sub-chart.  
-Create a chart which deploys a specific application located in 
-`<Chart directory>`, then:
+This repository provides a [Helm chart](https://helm.sh) which is meant to be
+used as a sub-chart. All you have to do to use it is add it to your own Helm 
+chart's `charts/` directory:
 
-1. Add this repository as a Git submodule to your repository:
+1. Create a chart which deploys a specific application located in 
+   `<Chart directory>`, then:
+2. Add this repository as a Git submodule to your repository:
    ```
    git submodule add git@github.com:kscout/http-service-chart.git <Chart directory>/charts/http
    ```
-2. Set [global values](#global-values) in `<Chart directory>/values.yaml`
-3. Set [chart values](#chart-values) in `<Chart directory>/values.yaml`, make 
+3. Checkout the latest release of this repository:
+   ```
+   cd <Chart directory>/charts/http
+   git checkout v0.2.1
+   ```
+4. Set [global values](#global-values) in `<Chart directory>/values.yaml`
+5. Set [chart values](#chart-values) in `<Chart directory>/values.yaml`, make 
    sure to prefix them with `http.`
-4. Ensure app container 
+6. Ensure app container 
    meets [app container image guidelines](#app-container-image)
 
 # Values
@@ -105,6 +111,7 @@ following pre-conditions:
 When a new release occurs:
 
 1. Bump `version` in [`Chart.yaml`](Chart.yaml)
-2. [Create release](https://github.com/kscout/http-service-chart/releases/new) 
+2. Update instruction step #3 in the [use section](#use) to checkout latest tag
+3. [Create release](https://github.com/kscout/http-service-chart/releases/new) 
    tagged `v<chart version>`
-3. Follow additional release instructions in [common Helm chart releases playbook](https://github.com/kscout/site-reliability/tree/master/playbooks/releases/common-helm-charts)
+4. Follow additional release instructions in [common Helm chart releases playbook](https://github.com/kscout/site-reliability/tree/master/playbooks/releases/common-helm-charts)
