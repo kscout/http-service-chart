@@ -24,7 +24,7 @@ used as a sub-chart. All you have to do to use it is add it to your own Helm
 chart's `charts/` directory:
 
 1. Create a chart which deploys a specific application located in 
-   `<Chart directory>`, then:
+   `<Chart directory>`, then
 2. Add this repository as a Git submodule to your repository:
    ```
    git submodule add git@github.com:kscout/http-service-chart.git <Chart directory>/charts/http
