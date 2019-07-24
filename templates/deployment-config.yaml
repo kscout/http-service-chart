@@ -49,7 +49,7 @@ spec:
         {{- end }}
       containers:
         - name: app
-          image: {{ .Values.global.app }}:{{ .Values.global.env }}-latest
+          image: {{ .Values.global.env }}-{{ .Values.global.app }}:{{ .Values.global.env }}-latest
           # Environment variables
           # Loaded from configMap, secret, and mongo Values
           {{- if or .Values.configMap .Values.secret .Values.mongoEnabled .Values.env }}
