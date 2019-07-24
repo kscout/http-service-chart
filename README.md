@@ -32,7 +32,7 @@ chart's `charts/` directory:
 3. Checkout the latest release of this repository:
    ```
    cd <Chart directory>/charts/http
-   git checkout v0.2.1
+   git checkout v0.3.0
    ```
 4. Set [global values](#global-values) in `<Chart directory>/values.yaml`
 5. Set [chart values](#chart-values) in `<Chart directory>/values.yaml`, make 
