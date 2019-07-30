@@ -12,6 +12,11 @@ routeEnabled: true
 # Number of app pod replicas to run
 replicas: 3
 
+# appImage is the container image to run
+# Defaults to the repository specifies by the "App Container Image"
+# section in the readme.
+#appImage:
+
 # Default value for host key.
 # Can be overridden by the host key.
 # If not host key provided:
