@@ -13,9 +13,7 @@ routeEnabled: true
 replicas: 3
 
 # appImage is the container image to run
-# Defaults to the repository specifies by the "App Container Image"
-# section in the readme.
-#appImage:
+#appImage: quay.io/kscout/repo:version
 
 # Default value for host key.
 # Can be overridden by the host key.
